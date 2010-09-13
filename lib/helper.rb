@@ -7,8 +7,8 @@ module Helper
     Things::Todo.find(todo_name) or Things::Todo.create(:name => todo_name)
   end
 
-  def self.task_url(config, project_name, task_list_id, task_id)
-    "#{config['site_url']}projects/#{project_name}/task_lists/#{task_list_id}/tasks/#{task_id}"
+  def self.task_url(teambox_url, project_name, task_list_id, task_id)
+    "#{teambox_url}/projects/#{project_name}/task_lists/#{task_list_id}/tasks/#{task_id}"
   end
 
   def self.find_person_id(project_people, account_id)

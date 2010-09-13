@@ -9,7 +9,7 @@ require File.join(File.dirname(__FILE__), 'lib', 'task_list_cache')
 require File.join(File.dirname(__FILE__), 'lib', 'helper')
 
 config = ConfigStore.new("#{ENV['HOME']}/.teambox")
-config['site_url'] ||= "http://teambox.com/"
+config['teambox_url'] ||= "http://teambox.com"
 config['output_info'] ||= true
 config['timeout_limit'] ||= 40
     
@@ -41,7 +41,7 @@ Timeout::timeout(config['timeout_limit']) {
           # update only those that aren't completed in both local and remote
           unless !Helper.is_task_open?(task.status) && things_todo.completed? 
             notes = "Don't edit this field!\n" + 
-              Helper.task_url(config, project.name, task.task_list_id, task.id)
+              Helper.task_url(config['teambox_url'], project.name, task.task_list_id, task.id)
             things_todo.project = Helper.find_or_create_project_in_things(project.name)
             things_todo.notes = notes
             unless task.due_on.nil?
