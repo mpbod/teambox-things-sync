@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/fastred/things-client.git
-  revision: 29ae8ab
+  revision: c72f562
   specs:
     things-client (0.2.2)
       rb-appscript (>= 0.5.3)
