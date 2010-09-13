@@ -14,7 +14,8 @@ config['output_info'] ||= true
 config['timeout_limit'] ||= 40
     
 Timeout::timeout(config['timeout_limit']) {
-  httpauth = Teambox::HTTPAuth.new(config['username'], config['password'])
+  httpauth = Teambox::HTTPAuth.new(config['username'], config['password'], 
+    :api_endpoint => Helper.api_url(config['teambox_url']))
   client = Teambox::Base.new(httpauth)
 
   client.projects.each do |project|
@@ -28,7 +29,8 @@ Timeout::timeout(config['timeout_limit']) {
         if !things_todo.nil? && things_todo.completed? && Helper.is_task_open?(task.status)
           # API isn't great right now so we update task as resolved and add new comment to it
           client.update_project_task(project.name, task.id, {:status => 3})
-          client.create_project_task_comment(project.name, task.id, {:status => 3, :body => "Sent from my Things.app"})
+          client.create_project_task_comment(project.name, task.id, {:status => 3, 
+            :body => "Sent from my Things.app"})
           puts "#{task.name} at remote set as done" if config['output_info']
         end
       end

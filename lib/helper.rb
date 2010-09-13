@@ -18,4 +18,8 @@ module Helper
   def self.is_task_open?(status)
     [0,1].include? status
   end
+  
+  def self.api_url(url)
+    url.gsub("http://", "")
+  end
 end
