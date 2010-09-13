@@ -9,10 +9,19 @@ GEM
   remote: http://rubygems.org/
   specs:
     crack (0.1.6)
+    diff-lcs (1.1.2)
     hashie (0.2.2)
     httparty (0.5.2)
       crack (= 0.1.6)
     rb-appscript (0.5.3)
+    rspec (2.0.0.beta.20)
+      rspec-core (= 2.0.0.beta.20)
+      rspec-expectations (= 2.0.0.beta.20)
+      rspec-mocks (= 2.0.0.beta.20)
+    rspec-core (2.0.0.beta.20)
+    rspec-expectations (2.0.0.beta.20)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.20)
     teambox-client (0.2.0)
       hashie (~> 0.2.0)
       httparty (~> 0.5.0)
@@ -23,5 +32,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rspec (>= 2.0.0.beta.20)
   teambox-client
   things-client!
