@@ -1,0 +1,7 @@
+.bundle
+*~
+*.cache
+*.log
+*.pid
+.DS_Store
+.rvmrc
