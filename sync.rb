@@ -56,7 +56,7 @@ Timeout::timeout(config['timeout_limit']) {
             end
             things_todo.tag_names = task_list_cache[task.task_list_id]
             things_todo.save
-            puts "\"#{task.name}\" have been saved in Things.app" if config['output_info']
+            puts "\"#{task.name}\" has been saved in Things.app" if config['output_info']
           end
         end
       end
