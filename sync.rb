@@ -49,7 +49,7 @@ Timeout::timeout(config['timeout_limit']) {
             unless task.due_on.nil?
               things_todo.due_date = Time.parse(task.due_on)
             end
-            unless [0,1].include?(task.status)
+            unless Helper.is_task_open?(task.status)
               things_todo.complete
             else
               things_todo.open
