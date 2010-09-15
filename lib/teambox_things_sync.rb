@@ -1,32 +1,33 @@
 class TeamboxThingsSync
   # attr_writer :client
 
-  def initialize(config)
-    @config = config
-    httpauth = Teambox::HTTPAuth.new(config['username'], config['password'],
-                                     :api_endpoint => api_url(config['teambox_url']))
+  def initialize
+    parse_config_file
+    httpauth = Teambox::HTTPAuth.new(@config['username'], @config['password'],
+                                     :api_endpoint => api_url(@config['teambox_url']))
     @client = Teambox::Base.new(httpauth)
   end
 
   def synchronise
-    begin
-      projects = @client.projects
-    rescue
-      log "Cannot fetch project list, check your internet connection."
-      exit
-    end
-    
-    projects.each do |project|
-      log "Started working with #{project.name}"
+    Timeout::timeout(@config['timeout_limit']) {
       begin
-        mark_as_done_at_remote(project)
-
-        person_id = find_person_id(project.permalink)
-        fetch_tasks_from_remote(project, person_id)
+        projects = @client.projects
       rescue
-        log "Something went wrong"
+        abort "Cannot fetch project list, check your internet connection."
       end
-    end
+    
+      projects.each do |project|
+        log "Started working with #{project.name}"
+        begin
+          mark_as_done_at_remote(project)
+
+          person_id = find_person_id(project.permalink)
+          fetch_tasks_from_remote(project, person_id)
+        rescue
+          abort "Something went wrong while updating."
+        end
+      end
+    }
   end
 
 
@@ -39,7 +40,8 @@ class TeamboxThingsSync
   end
 
   def task_url(project_permalink, task_list_id, task_id)
-    "#{@config['teambox_url']}/projects/#{project_permalink}/task_lists/#{task_list_id}/tasks/#{task_id}"
+    "#{@config['teambox_url']}/projects/#{project_permalink}/"+
+      "task_lists/#{task_list_id}/tasks/#{task_id}"
   end
 
   def api_url(url)
@@ -57,7 +59,8 @@ class TeamboxThingsSync
       @client.tasks.each do |task|
         things_todo = Things::Todo.find(task.name)
         if !things_todo.nil? && things_todo.completed? && is_task_open?(task.status)
-          # API isn't great right now, so we update task as resolved and add new comment to it
+          # API isn't great right now, so we update task as resolved 
+          # and add the new comment to it
           @client.update_project_task(project.permalink, task.id, {:status => 3})
           @client.create_project_task_comment(project.permalink, task.id,
                                               {:status => 3,
@@ -115,7 +118,26 @@ class TeamboxThingsSync
     end
 
     def log(text)
-      puts text if @config['output_info']
+      puts text if @config['output_log']
     end
 
+    
+    def parse_config_file
+      @config = ConfigStore.new("#{ENV['HOME']}/.teambox")
+      @config['teambox_url'] ||= "http://teambox.com"
+      @config['output_log'] ||= true
+      @config['timeout_limit'] ||= 40
+      check_correctness_of_config
+    end
+    
+    def check_correctness_of_config
+      if @config['username'].nil? || @config['password'].nil?
+        abort "'username' and/or 'password' not found in " +
+          "#{ENV['HOME']}/.teambox file. See README."
+      end
+      
+      unless @config['timeout_limit'].integer?
+        abort "timeout_limit should be a number (integer)"
+      end
+    end
 end
