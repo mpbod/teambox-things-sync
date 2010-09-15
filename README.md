@@ -1,7 +1,7 @@
 
 **teambox-things-sync** lets you sync your Things todos to and from Teambox Collaboration Software.
 
-It fetches todos from remote teambox app (project, task name, due date, task list name) and updates completed ones in both ways. Project (named like the one in teambox) will be created in Things if necessary.
+It fetches todos from remote teambox app (project, task name, due date, task list name) and updates completed ones in both ways. Project (named like the one in teambox) will be created in Things if necessary. By default only tasks assigned to you are imported.
 
 Installation
 -------------------------------------------------------------------------------
@@ -16,17 +16,21 @@ Then create a file $HOME/.teambox with these values:
 
     username: your_teambox_username_or_email
     password: password
-    site_url: http://path-to-your-teambox.com (optional, default: http://teambox.com)
+    site_url: http://your-teambox-app.com (optional, default set to http://teambox.com)
 
     
 Usage
 -------------------------------------------------------------------------------
 
-Finally run:
+Now you can run:
 
     ruby sync.rb
 
-While using default settings it should output names of imported todos.
+You should see output with names of imported tasks.
+
+If it worked you can add it to your crontab:
+
+    1,31 * * * * cd /path/to/teambox-things-sync/ && ruby sync.rb
 
 Legal
 -------------------------------------------------------------------------------
