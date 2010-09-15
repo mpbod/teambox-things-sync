@@ -1,0 +1,1 @@
+TeamboxThingsSync::Base.new.synchronise
