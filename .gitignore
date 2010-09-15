@@ -5,3 +5,5 @@
 *.pid
 .DS_Store
 .rvmrc
+pkg/*
+
