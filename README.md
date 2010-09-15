@@ -29,13 +29,13 @@ Now you can run:
 
 You should see output with names of imported tasks.
 
-If it worked, you can add it to your crontab, e.g.:
+If it worked, you can add it to your crontab. Type `crontab -e` in Terminal and add this line:
 
-    1,31 * * * * teambox-things-sync
+    1,31 * * * * teambox-things-sync > /dev/null 2>&1
     
 Or if you're using RVM:
     
-    1,31 * * * * rvm use rubyver@gemset && teambox-things-sync
+    1,31 * * * * source /Users/username/.rvm/scripts/rvm && rvm use rubyver@gemset && teambox-things-sync > /dev/null 2>&1
 
 Legal
 -------------------------------------------------------------------------------
