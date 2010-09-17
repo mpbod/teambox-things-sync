@@ -82,9 +82,10 @@ module TeamboxThingsSync
             # update only those that aren't completed in both local and remote
             if is_task_open?(task.status) || !things_todo.completed?
               things_todo.project = Base.find_or_create_project_in_things(project.name)
-              things_todo.notes = "Don't edit this field!\n" +
-                task_url(project.permalink, task.task_list_id, task.id)
-
+              things_todo.notes = build_notes(project.permalink, 
+                task.task_list_id, task.id)
+              things_todo.tag_names = task_list_cache[task.task_list_id]
+              
               unless task.due_on.nil?
                 things_todo.due_date = Time.parse(task.due_on)
               end
@@ -95,8 +96,7 @@ module TeamboxThingsSync
               else
                 things_todo.open
               end
-
-              things_todo.tag_names = task_list_cache[task.task_list_id]
+              
               things_todo.save              
               log "\"#{task.name}\" has been saved in Things.app"
             end
@@ -113,6 +113,16 @@ module TeamboxThingsSync
         # end
       end
 
+      def build_notes(project_permalink, task_list_id, task_id)
+        notes = task_url(project_permalink, task_list_id, task_id)+"\n\n"
+        @client.project_task_comments(project_permalink, task_id).reverse.each do |c|
+          unless c.body.nil?
+            notes << c.body + "\n----------\n\n"
+          end
+        end
+        notes
+      end
+        
       # finds person_id in given project
       def find_person_id(project_permalink)
         project_people = @client.project_people(project_permalink)
