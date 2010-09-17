@@ -14,3 +14,11 @@ begin
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
 end
+
+namespace :command do
+  desc "Run command with using current folder files (not gem)'"
+  task :test do
+    require 'lib/teambox-things-sync.rb'
+    require 'lib/teambox-things-sync/command'
+  end
+end
