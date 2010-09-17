@@ -46,4 +46,32 @@ describe "Things::Todo" do
     
   end
   
+  describe "#remember_today_listing" do
+    
+    before do
+      Things::App.instance.empty_trash
+      @todo = TeamboxThingsSync::Base.find_or_create_todo_in_things('TEST - Foo')
+      @todo.save
+    end
+    
+    it "should return true if todo existed in Today before updating" do
+      @todo.move(Things::List.today)
+      @todo = TeamboxThingsSync::Base.find_or_create_todo_in_things('TEST - Foo')
+      @todo.save
+      @todo.was_in_today.should be_true
+    end
+    
+    it "should return false if todo didn't exist in Today before updating" do
+      @todo = TeamboxThingsSync::Base.find_or_create_todo_in_things('TEST - Foo')
+      @todo.save
+      @todo.was_in_today.should be_false
+    end
+    
+    after do
+      @todo.delete
+      Things::App.instance.empty_trash
+    end
+  
+  end
+  
 end
