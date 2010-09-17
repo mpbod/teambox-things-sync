@@ -1,4 +1,6 @@
 module TeamboxThingsSync
+  
+  # saves unnecessary API queries for task list names
   class TaskListCache
   
     def initialize(client, project_name)
