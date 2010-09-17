@@ -6,7 +6,11 @@ require 'timeout'
 module TeamboxThingsSync
   autoload :Base, File.dirname(__FILE__) + '/teambox-things-sync/base'
   autoload :ConfigStore, File.dirname(__FILE__) + '/teambox-things-sync/config_store'
-  autoload :TaskListCache, File.dirname(__FILE__) + '/teambox-things-sync/task_list_cache'
+  module Cache
+    autoload :BaseCache, File.dirname(__FILE__) + '/teambox-things-sync/cache/base_cache'
+    autoload :TaskListCache, File.dirname(__FILE__) + '/teambox-things-sync/cache/task_list_cache'
+    autoload :UserNameCache, File.dirname(__FILE__) + '/teambox-things-sync/cache/user_name_cache'
+  end
 end
 
 module Things
