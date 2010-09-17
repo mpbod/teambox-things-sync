@@ -58,7 +58,7 @@ module TeamboxThingsSync
 
       # update tasks marked as done in Things
       def mark_as_done_at_remote(project)
-        @client.tasks.each do |task|
+        @client.project_tasks(project.permalink).each do |task|
           things_todo = Things::Todo.find(task.name)
           
           #TODO: clean it up
@@ -80,7 +80,7 @@ module TeamboxThingsSync
         task_list_cache = Cache::TaskListCache.new(@client, 
           {:project_permalink => project.permalink})
         @user_name_cache = Cache::UserNameCache.new(@client)
-        @client.tasks.each do |task|
+        @client.project_tasks(project.permalink).each do |task|
           # grab only tasks assigned to current user
           if task.assigned_id == person_id
             things_todo = Base.find_or_create_todo_in_things(task.name)
