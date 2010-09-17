@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{teambox-things-sync}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Arkadiusz Holko"]
-  s.date = %q{2010-09-15}
+  s.date = %q{2010-09-17}
   s.default_executable = %q{teambox-things-sync}
   s.email = %q{fastred@fastred.org}
   s.executables = ["teambox-things-sync"]
@@ -28,12 +28,15 @@ Gem::Specification.new do |s|
      "bin/teambox-things-sync",
      "lib/teambox-things-sync.rb",
      "lib/teambox-things-sync/base.rb",
+     "lib/teambox-things-sync/cache/base_cache.rb",
+     "lib/teambox-things-sync/cache/task_list_cache.rb",
+     "lib/teambox-things-sync/cache/user_name_cache.rb",
      "lib/teambox-things-sync/command.rb",
      "lib/teambox-things-sync/config_store.rb",
-     "lib/teambox-things-sync/task_list_cache.rb",
      "spec/spec_helper.rb",
      "spec/teambox-things-sync/base_spec.rb",
-     "spec/teambox-things-sync/task_list_cache_spec.rb",
+     "spec/teambox-things-sync/cache/task_list_cache_spec.rb",
+     "spec/teambox-things-sync/cache/user_name_cache_spec.rb",
      "spec/teambox-things-sync_spec.rb",
      "teambox-things-sync.gemspec"
   ]
@@ -45,7 +48,8 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/spec_helper.rb",
      "spec/teambox-things-sync/base_spec.rb",
-     "spec/teambox-things-sync/task_list_cache_spec.rb",
+     "spec/teambox-things-sync/cache/task_list_cache_spec.rb",
+     "spec/teambox-things-sync/cache/user_name_cache_spec.rb",
      "spec/teambox-things-sync_spec.rb"
   ]
 
