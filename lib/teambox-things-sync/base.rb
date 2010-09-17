@@ -77,7 +77,9 @@ module TeamboxThingsSync
 
       # fetches current task data from remote
       def fetch_tasks_from_remote(project, person_id)
-        task_list_cache = TaskListCache.new(@client, project.permalink)
+        task_list_cache = Cache::TaskListCache.new(@client, 
+          {:project_permalink => project.permalink})
+        @user_name_cache = Cache::UserNameCache.new(@client)
         @client.tasks.each do |task|
           # grab only tasks assigned to current user
           if task.assigned_id == person_id
