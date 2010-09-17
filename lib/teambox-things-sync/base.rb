@@ -98,6 +98,8 @@ module TeamboxThingsSync
 
               things_todo.tag_names = task_list_cache[task.task_list_id]
               things_todo.save
+              things_todo.move_to_correct_list
+              
               log "\"#{task.name}\" has been saved in Things.app"
             end
           end
