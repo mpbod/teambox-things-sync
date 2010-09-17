@@ -10,15 +10,18 @@ module TeamboxThingsSync
 end
 
 module Things
-   additional_properties = %{properties :tag_names, :due_date}
-   Todo.module_eval(additional_properties)
-   
-   class Todo
-     def move_to_correct_list
-       tomorrow_midnight = Time.parse((Date.today+1).to_s)
-       if self.due_date && self.due_date < tomorrow_midnight
-         self.move(Things::List.today)
-       end
-     end
-   end
+  # adds additional properties that doesn't exist in original gem
+  additional_properties = %{properties :tag_names, :due_date}
+  Todo.module_eval(additional_properties)
+
+  class Todo
+
+    # moves todo to Today list if it's due today or in the past
+    def move_to_correct_list
+      tomorrow_midnight = Time.parse((Date.today+1).to_s)
+      if self.due_date && self.due_date < tomorrow_midnight
+        self.move(Things::List.today)
+      end
+    end
+  end
 end
