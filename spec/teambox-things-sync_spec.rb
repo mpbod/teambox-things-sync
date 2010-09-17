@@ -1,9 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe TeamboxThingsSync do
-  pending
-end
-
 describe "Things::Todo" do
   
   describe "#move_to_today_if_necessary" do
