@@ -60,7 +60,10 @@ module TeamboxThingsSync
       def mark_as_done_at_remote(project)
         @client.tasks.each do |task|
           things_todo = Things::Todo.find(task.name)
-          if !things_todo.nil? && things_todo.completed? && is_task_open?(task.status)
+          
+          #TODO: clean it up
+          if !things_todo.nil? && things_todo.completed? && is_task_open?(task.status) &&
+            !Things::App.lists.trash.reference.todos.name.get.include?(things_todo.name)
             # API isn't great right now, so we update task as resolved 
             # and add the new comment to it
             @client.update_project_task(project.permalink, task.id, {:status => 3})
