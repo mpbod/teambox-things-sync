@@ -122,7 +122,7 @@ module TeamboxThingsSync
         notes = task_url(project_permalink, task_list_id, task_id)+"\n\n"
         @client.project_task_comments(project_permalink, task_id).reverse.each do |c|
           unless c.body.nil? || c.body.empty?
-            notes << "#{@user_name_cache[c.user_id]} @ #{c.updated_at}:\n #{c.body} \n----------\n\n"
+            notes << "#{@user_name_cache[c.user_id]} @ #{c.updated_at}:\n#{c.body}\n------------\n\n"
           end
         end
         notes
