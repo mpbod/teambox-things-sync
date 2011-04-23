@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
      "spec/teambox-things-sync_spec.rb",
      "teambox-things-sync.gemspec"
   ]
-  s.homepage = %q{http://github.com/fastred/teambox-things-sync}
+  s.homepage = %q{http://github.com/mpbod/teambox-things-sync}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
@@ -59,7 +59,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
-      s.add_runtime_dependency(%q<teambox-client>, ["= 0.2.0"])
+      s.add_runtime_dependency(%q<teambox-client>, ["= 0.3.2"])
       s.add_runtime_dependency(%q<things-client>, ["= 0.2.4"])
     else
       s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
